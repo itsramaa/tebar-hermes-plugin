@@ -24,14 +24,27 @@ class TebarConfig:
     base_url: str
 
     @classmethod
-    def from_env(cls) -> "TebarConfig":
+    def from_env(cls, profile_name: str | None = None) -> "TebarConfig":
+        try:
+            import sys
+            from pathlib import Path
+            common_dir = Path(__file__).resolve().parent.parent / "common"
+            if str(common_dir.parent) not in sys.path:
+                sys.path.insert(0, str(common_dir.parent))
+            from common.profile_resolver import resolve_profile_env
+            api_key = resolve_profile_env("TEBAR_API_KEY", profile_name=profile_name)
+            profile_id = resolve_profile_env("TEBAR_PROFILE_ID", profile_name=profile_name) or None
+        except Exception:
+            api_key = os.environ.get("TEBAR_API_KEY", "")
+            profile_id = os.environ.get("TEBAR_PROFILE_ID") or None
+
         try:
             timeout = int(os.environ.get("TEBAR_TIMEOUT", DEFAULT_TIMEOUT))
         except (TypeError, ValueError):
             timeout = DEFAULT_TIMEOUT
         return cls(
-            api_key=os.environ.get("TEBAR_API_KEY", ""),
-            profile_id=os.environ.get("TEBAR_PROFILE_ID") or None,
+            api_key=api_key,
+            profile_id=profile_id,
             timeout=max(1, timeout),
             base_url=DEFAULT_BASE_URL,
         )
