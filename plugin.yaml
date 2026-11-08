@@ -1,0 +1,15 @@
+name: tebar
+version: 0.1.0
+description: "Tebar API integration — multi-platform social publishing: accounts, posts, scheduling, drafts, insights."
+author: "Hermes"
+provides_tools:
+  - tebar_accounts
+  - tebar_create_post
+  - tebar_list_posts
+  - tebar_publish_post
+  - tebar_insights
+provides.commands:
+  - tebar-status
+  - tebar-draft
+provides_dashboard: true
+# Dashboard UI lives in dashboard/ (manifest.json + plugin_api.py + dist/index.js)

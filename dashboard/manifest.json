@@ -1,0 +1,13 @@
+{
+  "name": "tebar",
+  "label": "Tebar",
+  "description": "Multi-platform social publishing, scheduling and insights",
+  "icon": "Share2",
+  "version": "0.1.0",
+  "tab": {
+    "path": "/tebar",
+    "position": "after:skills"
+  },
+  "entry": "dist/index.js",
+  "api": "plugin_api.py"
+}
